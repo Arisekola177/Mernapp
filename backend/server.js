@@ -1,24 +1,24 @@
-require('dotenv').config()
+if(process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
 
 // init app
 const express = require('express')
 const mongoose = require('mongoose')
+const blogRoute = require('./routes/blogRoute')
 const app = express()
-
-// blog routes
-const blogRoutes = require('./routes/blogRoutes')
 
 // middleware
 app.use(express.json())
-
-app.use((req,res,next) =>{
+app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 })
+app.use('/uploads', express.static(__dirname + '/uploads'))
+
 
 // routes
-app.use('/api/blogs', blogRoutes)
-
+app.use('/api/blogs', blogRoute)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
@@ -30,3 +30,6 @@ mongoose.connect(process.env.MONGO_URI)
  .catch((error)=>{
     console.log(error)
  } )
+
+
+
