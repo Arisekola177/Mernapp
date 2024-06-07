@@ -1,11 +1,15 @@
 
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { useLogOut } from "../hooks/useLogOut"
 
 const Navbar = () => {
-  
-   const [userInfo, setUserInfo] = useState(true)
+  const {user} = useAuthContext()
+   const {logout} = useLogOut()
 
+const handleLogOut = ()  => {
+   logout()
+}
  
 
 
@@ -18,9 +22,10 @@ const Navbar = () => {
                 </Link>
              </div>
            {
-             userInfo ? (  <div className="flex items-center gap-6">
+             user ? (  <div className="flex items-center gap-6">
+              <p>{user.email}</p>
             <Link className="hover:text-red-500 duration-200" to='/create'>Create a Post</Link>
-            <Link className="hover:text-red-500 duration-200" to='/'>Logout</Link>
+            <button onClick={handleLogOut} className="hover:text-red-500 duration-200" >Logout</button>
           </div>) : (  <div className="flex items-center gap-6">
             <Link className="hover:text-red-500 duration-200" to='/register'>Register</Link>
             <Link className="hover:text-red-500 duration-200" to='/login'>Login</Link>

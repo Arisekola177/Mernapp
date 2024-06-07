@@ -6,6 +6,7 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express')
 const mongoose = require('mongoose')
 const blogRoute = require('./routes/blogRoute')
+const userRoute = require('./routes/userRoute')
 const app = express()
 
 // middleware
@@ -19,6 +20,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'))
 
 // routes
 app.use('/api/blogs', blogRoute)
+app.use('/api/user', userRoute)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
